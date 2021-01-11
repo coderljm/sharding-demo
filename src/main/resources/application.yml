@@ -1,0 +1,127 @@
+server:
+  port: 9090
+  tomcat:
+    max-connections: 1000
+    threads:
+      max: 1000
+      min-spare: 100
+    max-http-form-post-size: 10MB
+    max-swallow-size: 10MB
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  application:
+    name: sharding-demo
+  shardingsphere:
+    #\u6570\u636E\u5E93\u8FDE\u63A5\u4FE1\u606F
+    datasource:
+      names: db0,db1
+      db0:
+        #\u8FDE\u63A5\u6C60\u7C7B\u578B
+        type: com.zaxxer.hikari.HikariDataSource
+        #mysql url
+        jdbc-url: jdbc:mysql://localhost:3306/ds0?zeroDateTimeBehavior=CONVERT_TO_NULL&useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&autoReconnct=true&autoReconnectForPools=true
+        #\u8FDE\u63A5\u9A71\u52A8
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #\u7528\u6237\u540D
+        username: root
+        #\u5BC6\u7801
+        password: root
+        #\u8FDE\u63A5\u6C60\u6700\u5927\u8FDE\u63A5\u6570\uFF0C\u9ED8\u8BA4\u662F10
+        maximum-pool-size: 50
+        #\u8FDE\u63A5\u5F52\u8FD8\u540E\u662F\u5426\u81EA\u52A8\u63D0\u4EA4\u6240\u6709\u672A\u63D0\u4EA4\u7684\u4E8B\u52A1\uFF0C\u9ED8\u8BA4\u4E3Atrue
+        auto-commit: false
+        #\u8FDE\u63A5\u6C60\u4E2D\u8FDE\u63A5\u7684\u6700\u957F\u751F\u547D\u5468\u671F\uFF0C0\u8868\u793A\u65E0\u9650\u751F\u547D\u5468\u671F
+        max-lifetime: 600000
+        #\u8FDE\u63A5\u6C60\u540D\u79F0
+        pool-name: ${spring.application.name}-pool0
+        #\u6700\u5C0F\u7A7A\u95F2\u8FDE\u63A5\u6570
+        minimum-idle: 10
+        #\u6570\u636E\u8FDE\u63A5\u8D85\u65F6\u65F6\u95F4\uFF0C\u9ED8\u8BA430\u79D2
+        connection-timeout: 30000
+        #\u7A7A\u95F2\u8FDE\u63A5\u5B58\u6D3B\u6700\u5927\u65F6\u95F4
+        idle-timeout: 60000
+        #\u8FDE\u63A5\u6821\u9A8C\u8D85\u65F6\u65F6\u95F4
+        validation-timeout: 3000
+        #\u8FDE\u63A5\u6D4B\u8BD5sql
+        connection-test-query: select 1
+      db1:
+        #\u8FDE\u63A5\u6C60\u7C7B\u578B
+        type: com.zaxxer.hikari.HikariDataSource
+        #mysql url
+        jdbc-url: jdbc:mysql://localhost:3306/ds1?zeroDateTimeBehavior=CONVERT_TO_NULL&useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&autoReconnct=true&autoReconnectForPools=true
+        #\u8FDE\u63A5\u9A71\u52A8
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #\u7528\u6237\u540D
+        username: root
+        #\u5BC6\u7801
+        password: root
+        #\u8FDE\u63A5\u6C60\u540D\u79F0
+        pool-name: ${spring.application.name}-pool1
+        #\u8FDE\u63A5\u6C60\u6700\u5927\u8FDE\u63A5\u6570\uFF0C\u9ED8\u8BA4\u662F10
+        maximum-pool-size: 50
+        #\u8FDE\u63A5\u6C60\u4E2D\u8FDE\u63A5\u7684\u6700\u957F\u751F\u547D\u5468\u671F\uFF0C0\u8868\u793A\u65E0\u9650\u751F\u547D\u5468\u671F
+        max-lifetime: 600000
+        #\u8FDE\u63A5\u5F52\u8FD8\u540E\u662F\u5426\u81EA\u52A8\u63D0\u4EA4\u6240\u6709\u672A\u63D0\u4EA4\u7684\u4E8B\u52A1\uFF0C\u9ED8\u8BA4\u4E3Atrue
+        auto-commit: false
+        #\u6700\u5C0F\u7A7A\u95F2\u8FDE\u63A5\u6570
+        minimum-idle: 10
+        #\u6570\u636E\u8FDE\u63A5\u8D85\u65F6\u65F6\u95F4\uFF0C\u9ED8\u8BA430\u79D2
+        connection-timeout: 30000
+        #\u7A7A\u95F2\u8FDE\u63A5\u5B58\u6D3B\u6700\u5927\u65F6\u95F4
+        idle-timeout: 60000
+        #\u8FDE\u63A5\u6821\u9A8C\u8D85\u65F6\u65F6\u95F4
+        validation-timeout: 3000
+        #\u8FDE\u63A5\u6D4B\u8BD5sql
+        connection-test-query: select 1
+    sharding:
+      #\u5206\u5E93\u914D\u7F6E
+      default-database-strategy:
+        inline:
+          sharding-column: student_id
+          algorithm-expression: db$->{student_id%2}
+      #\u5206\u8868\u914D\u7F6E
+      tables:
+        student:
+          actual-data-nodes: db$->{0..1}.student$->{0..1}
+          table-strategy:
+            inline:
+              sharding-column: student_id
+              algorithm-expression: student$->{student_id%2}
+#          key-generator:
+#            column: student_id
+#            type: SNOWFLAKE
+#            props:
+#              #\u5DE5\u4F5C\u673A\u5668ID
+#              worker:
+#                id: ${random.long(11,21)}
+#              max:
+#                #\u65F6\u95F4\u6296\u52A8\u8865\u507F\u6BEB\u79D2\u6570
+#                vibration:
+#                  offset: 2
+#                #\u6700\u5927\u5BB9\u5FCD\u65F6\u95F4\u5DEE\u6BEB\u79D2\u6570
+#                tolerate:
+#                  time:
+#                    difference:
+#                      milliseconds: 5
+    #org.apache.shardingsphere.underlying.common.config.properties.ConfigurationPropertyKey
+    props:
+      sql:
+        show: false
+#==============================================================
+#mybatis\u914D\u7F6E
+#==============================================================
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/*.xml
+  type-aliases-package: com.sharding.demo.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: assign_id
+      select-strategy: not_empty
+      update-strategy: not_null
+      insert-strategy: not_null
