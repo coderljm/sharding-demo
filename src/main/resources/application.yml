@@ -15,7 +15,7 @@ spring:
   application:
     name: sharding-demo
   shardingsphere:
-    #\u6570\u636E\u5E93\u8FDE\u63A5\u4FE1\u606F
+    #数据库连接信息
     datasource:
       names: db0,db1
       db0:
