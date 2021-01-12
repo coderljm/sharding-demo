@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * @Author: jianmin.li
- * @Description: LocalDateTimeTypeHandler,为了让mybatis支持localDateTime
+ * @Description: LocalDateTimeTypeHandler,为了让mybatis支持LocalDateTime
  * @Date: 2021/1/12 1:01
  * @Version: 1.0
  */
