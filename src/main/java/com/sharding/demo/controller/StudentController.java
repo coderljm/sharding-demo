@@ -44,6 +44,16 @@ public class StudentController {
         studentService.saveBatch(students);
     }
 
+    /**
+     * <p>
+     * 根据学生主键查询学生信息
+     * <p/>
+     *
+     * @param studentId 学生主键
+     * @return 学生信息
+     * @author lijianmin
+     * @date 2021/1/12 12:34
+     */
     @GetMapping("/getStudentById/{studentId}")
     public Student getStudentById(@PathVariable Long studentId) {
         return studentService.getById(studentId);
