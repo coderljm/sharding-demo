@@ -22,9 +22,15 @@
         <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
         <fastjson.version>1.2.75</fastjson.version>
         <commons-lang3.version>3.11</commons-lang3.version>
+        <easyexcel.version>2.2.7</easyexcel.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>${easyexcel.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
