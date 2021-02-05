@@ -5,6 +5,7 @@ import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
+import com.alibaba.fastjson.JSON;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -18,7 +19,6 @@ import static java.time.format.DateTimeFormatter.ofPattern;
  * @Version: 1.0
  */
 public class LocalDateTimeConverter implements Converter<LocalDateTime> {
-    private static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     @Override
     public Class supportJavaTypeKey() {
@@ -36,12 +36,12 @@ public class LocalDateTimeConverter implements Converter<LocalDateTime> {
         if (Objects.isNull(cellData.getStringValue())) {
             return null;
         }
-        return LocalDateTime.parse(cellData.getStringValue().replace("'",""),ofPattern(DEFAULT_PATTERN));
+        return LocalDateTime.parse(cellData.getStringValue(),ofPattern(JSON.DEFFAULT_DATE_FORMAT));
     }
 
     @Override
     public CellData convertToExcelData(LocalDateTime localDateTime,ExcelContentProperty excelContentProperty,
                                        GlobalConfiguration globalConfiguration) {
-        return new CellData<>(localDateTime.format(ofPattern(DEFAULT_PATTERN)));
+        return new CellData<>(localDateTime.format(ofPattern(JSON.DEFFAULT_DATE_FORMAT)));
     }
 }
