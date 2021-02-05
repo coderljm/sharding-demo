@@ -28,7 +28,7 @@ public class DataSourceHealthConfig extends DataSourceHealthContributorAutoConfi
     @Override
     protected AbstractHealthIndicator createIndicator(DataSource source) {
         DataSourceHealthIndicator indicator = (DataSourceHealthIndicator) super.createIndicator(source);
-        if (StringUtils.isNotBlank(indicator.getQuery())) {
+        if (StringUtils.isBlank(indicator.getQuery())) {
             indicator.setQuery("select 1");
         }
         return indicator;
