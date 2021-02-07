@@ -24,7 +24,8 @@ public class MemberCheckVO {
     private BigDecimal creditAmount;
     @ExcelProperty(index = 6)
     private BigDecimal raiseAmount199;
-
+    @ExcelProperty(index = 2)
+    private String idCard;
     @Override
     public String toString() {
         return JSON.toJSONString(this);
